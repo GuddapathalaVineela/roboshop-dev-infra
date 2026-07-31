@@ -23,6 +23,11 @@ resource "terraform_data" "mongodb" {
         host = aws_instance.mongodb.private_ip
     }
 
+    #terraform copies this file to mongodb server
+    provisioner "file" {
+        source = "bootsrap.sh"
+    }
+
     provisioner "remote_exec" {
         inline = [
             "echo Hello World"
