@@ -32,7 +32,7 @@ resource "terraform_data" "mongodb" {
     provisioner "remote_exec" {
         inline = [
             "chmod +X /tmp/bootsrap.sh"
-            "sudo sh /tmp/bootsrap.sh"
+            "sudo sh /tmp/bootsrap.sh mongodb"
         ]
     }
 }
@@ -50,6 +50,31 @@ resource "terraform_data" "redis" {
             Name = "${local.common_name_suffix}-redis"
         }
     ) 
+}
+
+resource "terraform_data" "redis" {
+    triggers_replace = [
+        aws_instance.redis.id
+    ]
+    connection {
+        type = "ssh"
+        user = "ec2-user"
+        password = "DevOps321"
+        host = aws_instance.redis.private_ip
+    }
+
+    #terraform copies this file to mongodb server
+    provisioner "file" {
+        source = "bootsrap.sh"
+        destination = "/tmp/bootsrap.sh"
+    }
+
+    provisioner "remote_exec" {
+        inline = [
+            "chmod +X /tmp/bootsrap.sh"
+            "sudo sh /tmp/bootsrap.sh redis"
+        ]
+    }
 }
 
 
