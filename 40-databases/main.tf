@@ -26,11 +26,12 @@ resource "terraform_data" "mongodb" {
     #terraform copies this file to mongodb server
     provisioner "file" {
         source = "bootsrap.sh"
+        destination = "/tmp/bootsrap.sh"
     }
 
     provisioner "remote_exec" {
         inline = [
-            "echo Hello World"
+            "chmod +X /tmp/bootsrap.sh"
         ]
     }
 }
