@@ -77,5 +77,44 @@ resource "terraform_data" "redis" {
     }
 }
 
+resource "terraform_data" "rabbitmq" {
+    ami = local.ami_id
+    instance_type = "t3.micro"
+    vpc_security_group_ids = [local.rabbitmq_sg_id]
+    subnet_id = local.database_subnet_id
+
+    tags = merge (
+        local.common_tags,
+        {
+            Name = "${local.common_name_suffix}-rabbitmq"
+        }
+    ) 
+}
+
+resource "terraform_data" "rabbitmq" {
+    triggers_replace = [
+        aws_instance.rabbitmq.id
+    ]
+    connection {
+        type = "ssh"
+        user = "ec2-user"
+        password = "DevOps321"
+        host = aws_instance.rabbitmq.private_ip
+    }
+
+    #terraform copies this file to rabbitmq server
+    provisioner "file" {
+        source = "bootsrap.sh"
+        destination = "/tmp/bootsrap.sh"
+    }
+
+    provisioner "remote_exec" {
+        inline = [
+            "chmod +X /tmp/bootsrap.sh"
+            "sudo sh /tmp/bootsrap.sh rabbitmq"
+        ]
+    }
+}
+
 
 }
