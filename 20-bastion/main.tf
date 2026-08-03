@@ -12,8 +12,6 @@ resource "aws_instance" "bastion" {
 
 
     user_data = file("bastion.sh")
-
-    
     tags = merge (
         local.common_tags,
     {
