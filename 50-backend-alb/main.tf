@@ -39,3 +39,11 @@ resource "aws_security_group_rule" "bakend_alg_sg_id" {
     protocol = "tcp"
     to_port = 80
 }
+
+#Backend ALB listening port number 80
+resource "aws_lb_listener" "frontend" {
+    load_balancer_arn = aws_lb.backend_alb.arn
+    port = "80"
+    protocol = "HTTP"
+    
+}
