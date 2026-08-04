@@ -47,3 +47,16 @@ resource "aws_ec2_instance_state" "catalogue" {
   state = "stopped"
   depends_on = [terraform_data.catalogue]
 }
+
+resource "aws_ami_from_instance" "catalogue" {
+  name = "${local.common_name_suffix}-catalogue-ami"
+  source_instance_id = aws_instance.catalogue_sg_id
+  depends_on = [aws_ami_from_instance.catalogue]
+
+  tags = merge (
+    local.common_tags,
+    {
+      Name = "${local.common_name_suffix}-catalogue-ami"  #roboshop-dev-mongodb
+    }
+  )
+}
