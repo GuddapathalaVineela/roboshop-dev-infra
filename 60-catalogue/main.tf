@@ -40,3 +40,10 @@ resource "terraform_data" "catalogue" {
     ]
   }
 }
+
+#Stop the instance to take the image
+resource "aws_ec2_instance_state" "catalogue" {
+  instance_id = aws_instance.catalogue_sg_id
+  state = "stopped"
+  depends_on = [terraform_data.catalogue]
+}
