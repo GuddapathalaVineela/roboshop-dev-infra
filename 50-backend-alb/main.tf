@@ -47,3 +47,9 @@ resource "aws_lb_listener" "frontend" {
     protocol = "HTTP"
     
 }
+
+resource "aws_route53_alb" "backend_alb" {
+    zone_id = var.zone_id
+    name = "*.backend_alb-${var.environment}.${var.domain_name}"
+    type = "A"
+}
