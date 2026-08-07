@@ -1,15 +1,15 @@
-resource "aws_lb" "backend_alb" {
-    name = "${local.common_name_suffix}-backend_alb" # roboshop-dev-backend-alb
-    internal = true
+resource "aws_lb" "frontend_alb" {
+    name = "${local.common_name_suffix}-frontend_alb" # roboshop-dev-backend-alb
+    internal = false
     load_balance_type = "application"
-    security_groups = [local.backend_alb_sg_id]
-    subnets = local.private_subnet_ids
-    enable_deletion_protection = true #prevents accidential deletion UI
+    security_groups = [local.frontend_alb_sg_id]
+    subnets = local.public_subnet_ids
+    enable_deletion_protection = false #prevents accidential deletion UI
 
     tags = merge (
         local.common_tags,
         {
-            Name = "${local.common_name_suffix}-backend-alb"
+            Name = "${local.common_name_suffix}-frontend-alb"
         }
     )
 }
