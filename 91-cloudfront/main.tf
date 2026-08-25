@@ -84,16 +84,3 @@ resource "aws_route53_record" "cdn" {
   }
 }
 
-resource "aws_route53_record" "cdn" {
-  zone_id = var.zone_id
-  name    = "${var.environment}.${var.domain_name}" # dev.daws86s.fun
-  type    = "A"
-  allow_overwrite = true
-
-  alias {
-    # These are ALB details, not our domain details
-    name                   = aws_cloudfront_distribution.roboshop.domain_name
-    zone_id                = aws_cloudfront_distribution.roboshop.hosted_zone_id
-    evaluate_target_health = true
-  }
-}
