@@ -12,8 +12,6 @@ resource "aws_cloudfront_distribution" "roboshop" {
     }
   }
 
-
-
   enabled             = true
   
   # dev.daws86s.fun
