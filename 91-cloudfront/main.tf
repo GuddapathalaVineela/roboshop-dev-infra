@@ -12,6 +12,21 @@ resource "aws_cloudfront_distribution" "roboshop" {
     }
   }
 
+
+resource "aws_cloudfront_distribution" "roboshop" {
+  
+  origin {
+    # roboshop-dev.daws86s.fun
+    domain_name = "${var.project_name}-${var.environment}.${var.domain_name}"
+    origin_id   = "${var.project_name}-${var.environment}.${var.domain_name}"
+    custom_origin_config {
+      http_port              = 80
+      https_port             = 443
+      origin_protocol_policy = "https-only"
+      origin_ssl_protocols   = ["TLSv1.2"]
+    }
+  }  
+
   enabled             = true
   
   # dev.daws86s.fun
