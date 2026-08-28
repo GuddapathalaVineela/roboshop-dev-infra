@@ -13,5 +13,4 @@ data "aws_ssm_parameter" "certificate_arn" {
 
 # *.daws86s.fun
 data "aws_ssm_parameter" "certificate_arn" {
-  name = "/${var.project_name}/${var.environment}/frontend_alb_certificate_arn"
 }
