@@ -12,4 +12,6 @@ data "aws_ssm_parameter" "certificate_arn" {
 }
 
 data "aws_ssm_parameter" "certificate_arn" {
+
+  
 }
